@@ -24,7 +24,7 @@ enum class Color {
     RED, GREEN, BLUE, YELLOW
 }
 
-abstract class ColoredCard(val color: Color) : Card()
+sealed class ColoredCard(val color: Color) : Card()
 class NumberCard(val number: Int, color: Color) : ColoredCard(color)
 class ActionCard(val action: Action, color: Color) : ColoredCard(color)
 
@@ -63,6 +63,10 @@ class Deck(private val cards: MutableList<Card> = mutableListOf()) {
     fun drawCard(): Card {
         val idx = randGen.nextInt(cards.size)
         return cards.removeAt(idx)
+    }
+
+    fun drawTop(): Card {
+        return cards.removeLast()
     }
 }
 

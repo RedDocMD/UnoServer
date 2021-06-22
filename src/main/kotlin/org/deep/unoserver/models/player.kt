@@ -5,7 +5,7 @@ import java.util.*
 
 class Player(val name: String) {
     private val hand: MutableList<Card> = mutableListOf()
-    val uuid = UUID.randomUUID()
+    val uuid: UUID = UUID.randomUUID()
     var isReady = false
 
     fun initPlayer(deck: Deck) {
@@ -29,8 +29,27 @@ class Player(val name: String) {
     }
 
     override fun hashCode(): Int {
-        return uuid?.hashCode() ?: 0
+        return uuid.hashCode() ?: 0
+    }
+
+    fun drawCard(deck: Deck) {
+        if (!isReady)
+            throw PlayerNotReady()
+        hand.add(deck.drawCard())
+    }
+
+    fun cards(): List<Card> {
+        if (!isReady)
+            throw PlayerNotReady()
+        return hand
+    }
+
+    fun removeCard(card: Card) {
+        if (!isReady)
+            throw PlayerNotReady()
+        hand.remove(card)
     }
 }
 
 class CannotMakePlayerReadyTwice : RuntimeException()
+class PlayerNotReady : RuntimeException()
