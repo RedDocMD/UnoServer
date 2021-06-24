@@ -68,6 +68,11 @@ class Deck(private val cards: MutableList<Card> = mutableListOf()) {
     fun drawTop(): Card {
         return cards.removeLast()
     }
+
+    fun returnAndShuffle(card: Card) {
+        cards.add(card)
+        cards.shuffle()
+    }
 }
 
 class DiscardPile {
